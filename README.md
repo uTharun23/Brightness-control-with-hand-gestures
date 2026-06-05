@@ -6,7 +6,7 @@ This project is a high-tech, real-time hand gesture brightness controller built 
 
 Try the web-based gesture controller immediately in your browser:
 - **[GitHub Pages Live Demo](https://utharun23.github.io/Brightness-control-with-hand-gestures/)**
-- **[Vercel Live Demo](https://brightness-control-with-hand-gestures.vercel.app/)**
+- **[Vercel Live Demo](https://brightness-control-with-hand-gestur.vercel.app/)**
 
 *(Note: The browser version adjusts the brightness of the web page itself using a transparent overlay, as browser sandboxes are secure and cannot change your physical monitor's backlight directly. To control your physical screen, use the Desktop version below.)*
 
