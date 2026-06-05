@@ -289,6 +289,31 @@
         height: 400px;
       }
     }
+
+    /* Stop button styles */
+    .stop-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      font-family: var(--font-hud);
+      background: rgba(255, 60, 60, 0.15);
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 8px 18px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 50;
+      box-shadow: 0 0 10px rgba(255, 60, 60, 0.15);
+      transition: all 0.3s ease;
+    }
+
+    .stop-btn:hover {
+      background: var(--red);
+      color: #000;
+      box-shadow: 0 0 20px rgba(255, 60, 60, 0.5);
+    }
   </style>
 </head>
 <body>
@@ -306,6 +331,8 @@
         <button id="start-btn" class="start-btn">INITIALIZE CAMERA</button>
         <p id="loading-txt" style="color: #666; margin-top: 15px; display: none;">Loading MediaPipe Model...</p>
       </div>
+
+      <button id="stop-btn" class="stop-btn" style="display: none;">STOP SYSTEM</button>
 
       <video id="webcam" autoplay playsinline></video>
       <canvas id="output-canvas"></canvas>
@@ -364,9 +391,11 @@
     const dialProgress = document.getElementById("dial-progress");
     const meterValue = document.getElementById("meter-value");
     const dimmerOverlay = document.getElementById("dimmer-overlay");
+    const stopBtn = document.getElementById("stop-btn");
 
     let handLandmarker = null;
     let controlActive = false;
+    let isRunning = false;
     
     // Smooth states
     let smoothBrightnessHud = 50.0;
@@ -417,6 +446,9 @@
         video.srcObject = stream;
         
         video.addEventListener("loadeddata", () => {
+          isRunning = true;
+          stopBtn.style.display = "block";
+          
           startOverlay.style.opacity = "0";
           setTimeout(() => { startOverlay.style.display = "none"; }, 500);
           
@@ -435,6 +467,7 @@
     });
 
     function renderLoop() {
+      if (!isRunning) return;
       if (!video.paused && !video.ended) {
         const timestamp = performance.now();
         const results = handLandmarker.detectForVideo(video, timestamp);
@@ -595,6 +628,41 @@
       
       requestAnimationFrame(renderLoop);
     }
+
+    // Stop System Click Event Handler
+    stopBtn.addEventListener("click", () => {
+      isRunning = false;
+      stopBtn.style.display = "none";
+      
+      // Stop webcam tracks
+      if (video.srcObject) {
+        const stream = video.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+      }
+      
+      // Clear canvas
+      canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Reset HUD states to defaults
+      targetBrightness = 100.0;
+      smoothBrightnessHud = 100.0;
+      meterValue.innerText = "100%";
+      dialProgress.style.strokeDashoffset = 0;
+      dialProgress.style.stroke = getGlowColor(100);
+      statusBadge.innerText = "STATUS: LOCKED";
+      statusBadge.className = "status-badge";
+      dimmerOverlay.style.backgroundColor = "rgba(0, 0, 0, 0)";
+      
+      // Show start overlay
+      startOverlay.style.display = "flex";
+      setTimeout(() => {
+        startOverlay.style.opacity = "1";
+        startBtn.style.display = "inline-block";
+        loadingTxt.style.display = "none";
+      }, 50);
+    });
   </script>
 </body>
 </html>
