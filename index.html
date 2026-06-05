@@ -146,10 +146,12 @@
 
     /* Circular SVG Dial */
     .meter-container {
+      position: relative;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       align-items: center;
       margin: 40px 0;
+      height: 160px;
     }
 
     .dial-svg {
@@ -180,6 +182,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      pointer-events: none;
     }
 
     .meter-value {
