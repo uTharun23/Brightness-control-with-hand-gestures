@@ -1,4 +1,4 @@
-# Hyperion: Premium Gesture-Based Brightness Control
+# Brightness Control With Hand Gestures
 
 This project is a high-tech, real-time hand gesture brightness controller built with Python, OpenCV, Google MediaPipe Hands, and the `screen-brightness-control` library. It features a custom glassmorphic HUD overlay and distance-invariant calculations.
 
