@@ -1,11 +1,12 @@
-# Brightness Control With Hand Gestures
+# Hyperion: Premium Gesture-Based Brightness Control
 
 This project is a high-tech, real-time hand gesture brightness controller built with Python, OpenCV, Google MediaPipe Hands, and the `screen-brightness-control` library. It features a custom glassmorphic HUD overlay and distance-invariant calculations.
 
 ## 🚀 Live Demo (Browser Version)
 
 Try the web-based gesture controller immediately in your browser:
-👉 **[Live Web Demo](https://utharun23.github.io/Brightness-control-with-hand-gestures/)**
+- **[GitHub Pages Live Demo](https://utharun23.github.io/Brightness-control-with-hand-gestures/)**
+- **[Vercel Live Demo](https://brightness-control-with-hand-gestures.vercel.app/)**
 
 *(Note: The browser version adjusts the brightness of the web page itself using a transparent overlay, as browser sandboxes are secure and cannot change your physical monitor's backlight directly. To control your physical screen, use the Desktop version below.)*
 
